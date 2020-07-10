@@ -1,7 +1,3 @@
-#Azeem Syed Hussaini
-#100707191
-#Ontario Technology University
-
 class EventSourcer():
     # Do not change the signature of any functions
 
@@ -12,13 +8,11 @@ class EventSourcer():
 
     def add(self, num: int):
         self.value = self.value + num
-        self.history.append(num)
-        self.undoHistory = []   
+        self.history.append(num) 
 
     def subtract(self, num: int):
         self.value = self.value - num
         self.history.append(-num)
-        self.undoHistory = []
 
     def undo(self):
         if len(self.history) > 0:
@@ -51,26 +45,24 @@ class EventSourcer():
 
 example = EventSourcer()
 
-example.add(20)
+example.add(5)
 print("value: " + str(example.value))
 
-example.add(30)
+example.add(5)
 print("value: " + str(example.value))
 
-example.subtract(10)
+example.add(5)
 print("value: " + str(example.value))
 
 example.undo()
 print("value: " + str(example.value))
 
-example.redo()
+example.undo()
+print("value: " + str(example.value))
+
+example.add(1)
 print("value: " + str(example.value))
 
 example.redo()
 print("value: " + str(example.value))
 
-example.bulk_undo(2)
-print("value: " + str(example.value))
-
-example.bulk_redo(2)
-print("value: " + str(example.value))
