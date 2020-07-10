@@ -1,23 +1,76 @@
+#Azeem Syed Hussaini
+#100707191
+#Ontario Technology University
+
 class EventSourcer():
     # Do not change the signature of any functions
 
     def __init__(self):
         self.value = 0
+        self.history = []
+        self.undoHistory = []
 
     def add(self, num: int):
-        pass
+        self.value = self.value + num
+        self.history.append(num)
+        self.undoHistory = []   
 
     def subtract(self, num: int):
-        pass
+        self.value = self.value - num
+        self.history.append(-num)
+        self.undoHistory = []
 
     def undo(self):
-        pass
+        if len(self.history) > 0:
+            num = self.history[-1]
+            self.value = self.value - num
+            self.undoHistory.append(-num)
 
     def redo(self):
-        pass
+        if len(self.undoHistory) > 0:
+            num = self.undoHistory[-1]
+            self.value = self.value - num
+            self.undoHistory = []
 
     def bulk_undo(self, steps: int):
-        pass
+        while len(self.history) > 0 and steps > 0:
+            num = self.history[-1]
+            self.value = self.value - num
+            del self.history[-1]
+            self.undoHistory.append(-num)
+            steps = steps - 1
 
     def bulk_redo(self, steps: int):
-        pass
+        while len(self.undoHistory) > 0 and steps > 0:
+            num = self.undoHistory[-1]
+            self.value = self.value - num
+            del self.undoHistory[-1]
+            
+            steps = steps - 1
+    
+
+example = EventSourcer()
+
+example.add(20)
+print("value: " + str(example.value))
+
+example.add(30)
+print("value: " + str(example.value))
+
+example.subtract(10)
+print("value: " + str(example.value))
+
+example.undo()
+print("value: " + str(example.value))
+
+example.redo()
+print("value: " + str(example.value))
+
+example.redo()
+print("value: " + str(example.value))
+
+example.bulk_undo(2)
+print("value: " + str(example.value))
+
+example.bulk_redo(2)
+print("value: " + str(example.value))
